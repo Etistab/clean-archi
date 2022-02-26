@@ -7,9 +7,20 @@
 			Name = name;
 		}
 
-		int Index;
-		int Size;
-		string Name;
+		public int Index;
+		public int Size;
+		public string Name;
+	}
+
+	public static List<RowInfos> fillRows(string row) {
+		var rowInfos = new List<RowInfos>();
+
+		int i = 0;
+		foreach (var columName in row.Split(',')) {
+			rowInfos.Add(new RowInfos(i++, columName.Length, columName));
+		}
+
+		return rowInfos;
 	}
 
 	//lots of comments!
@@ -26,29 +37,24 @@
 		//if command is print  
 		if (command == "print")  
 		{  
-			 //get the header line  
-			 string line1 = dataContentString[0];  
-			 //get other content lines  
-			 var otherLines = dataContentString.Skip(1);
-			 var columnInfos = new List<RowInfos>();
-			 //build the header of the table with column names from our data file  
-			 int i = 0;
-			 foreach (var columName in line1.Split(','))
-			 {
-				 columnInfos.Add(new RowInfos(i++, columName.Length, columName));
-			 }
+			//Print header line
+			string headerLine = dataContentString[0];
+			var headerInfos = fillRows(headerLine);  
+			
+			var headerString = String.Join(
+				" | ", 
+				headerInfos.Select(x=>x.Name).Select(
+					(val,ind) => val.PadLeft(16)));
+			Console.WriteLine("+" + new String('-', headerString.Length + 2) + "+");
+			Console.WriteLine("| " + headerString + " |");
+			Console.WriteLine("+" + new String('-', headerString.Length + 2) + "+");
+			
+			//Print content lines
+			var contentLines = dataContentString.Skip(1);
+			
+			foreach (string line in contentLines) { 
+				var contentInfos = fillRows(line);
 
-			 var headerString  = String.Join(
-				 " | ", 
-				 columnInfos.Select(x=>x.Name).Select(
-					 (val,ind) => val.PadLeft(16)));
-			 Console.WriteLine("+" + new String('-', headerString.Length + 2) + "+");
-			 Console.WriteLine("| " + headerString + " |");
-			 Console.WriteLine("+" + new String('-', headerString.Length +2 ) + "+");
-
-			 //then add each line to the table  
-			 foreach (string line in otherLines)  
-			 { 
 				 //extract columns from our csv line and add all these cells to the line  
 				 var cells = line.Split(',');
 				 var tableLine  = String.Join(
