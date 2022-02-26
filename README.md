@@ -2,7 +2,7 @@
 
 ## Commentaires sur le code et sa structure
 
-Le premier prolbème qui nous saute aux yeux est le mise en forme et l'indentation du code.
+Le premier problème qui nous saute aux yeux est le mise en forme et l'indentation du code.
 
 En regardant d'un peu plus prêt, on remarque que tout le code métier est mélanger à la "plomberie". Il faudrait séparer les deux.
 

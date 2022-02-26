@@ -1,5 +1,17 @@
 ﻿public static class Program
 {
+	public struct RowInfos {
+		public RowInfos(int index, int size, string name) {
+			Index = index;
+			Size = size;
+			Name = name;
+		}
+
+		int Index;
+		int Size;
+		string Name;
+	}
+
 	//lots of comments!
 	public static void Main(string[] args)
 	{
@@ -18,17 +30,17 @@
 			 string line1 = dataContentString[0];  
 			 //get other content lines  
 			 var otherLines = dataContentString.Skip(1);
-			 var columnInfos = new List<(int index, int size, string name)>();
+			 var columnInfos = new List<RowInfos>();
 			 //build the header of the table with column names from our data file  
 			 int i = 0;
 			 foreach (var columName in line1.Split(','))
 			 {
-				 columnInfos.Add((i++, columName.Length, columName));
+				 columnInfos.Add(new RowInfos(i++, columName.Length, columName));
 			 }
 
 			 var headerString  = String.Join(
 				 " | ", 
-				 columnInfos.Select(x=>x.name).Select(
+				 columnInfos.Select(x=>x.Name).Select(
 					 (val,ind) => val.PadLeft(16)));
 			 Console.WriteLine("+" + new String('-', headerString.Length + 2) + "+");
 			 Console.WriteLine("| " + headerString + " |");
