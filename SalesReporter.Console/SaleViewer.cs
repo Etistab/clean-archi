@@ -36,5 +36,17 @@ class SaleViewer{
         Console.WriteLine($"+{new String('-',45)}+");
     }
 
+    public void incrementSales(){
+        this.totalNumberSales++;
+    }
+
+    public void addItemNumber(int itemNumber){
+        this.totalItemSold += itemNumber;
+    }
+
+    public void addBasketAmount(double basketAmount){
+        this.totalSoldAmount += basketAmount;
+    }
+
 
 }
